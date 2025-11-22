@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Wedding Photo Gallery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💒 Wedding Photo Gallery</h1>
+            <p class="subtitle">Beautiful moments captured forever</p>
+        </header>
+
+        <!-- Face Match Section -->
+        <section class="face-match-section">
+            <div class="face-match-card">
+                <h2>🎯 Find Your Photos</h2>
+                <p>Upload a selfie to find all photos with you using AI face recognition!</p>
+                
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="selfieInput" accept="image/*" capture="user" hidden>
+                    <label for="selfieInput" class="upload-label">
+                        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                            <circle cx="12" cy="13" r="4"/>
+                        </svg>
+                        <span>Click to upload your selfie</span>
+                        <span class="upload-hint">or drag & drop here</span>
+                    </label>
+                </div>
+
+                <div id="previewArea" class="preview-area" style="display: none;">
+                    <img id="previewImage" alt="Preview">
+                    <button id="searchBtn" class="btn btn-primary">Search My Photos</button>
+                    <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                </div>
+
+                <div id="loadingIndicator" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Searching for your photos with AI...</p>
+                </div>
+
+                <div id="matchResults" class="match-results" style="display: none;"></div>
+            </div>
+        </section>
+
+        <!-- All Photos Section -->
+        <section class="gallery-section">
+            <h2>📸 All Wedding Photos</h2>
+            <div class="gallery-controls">
+                <button id="showAllBtn" class="btn btn-outline">Show All Photos</button>
+                <span id="photoCount" class="photo-count"></span>
+            </div>
+            <div id="galleryGrid" class="gallery-grid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading photos...</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal for full-size image -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close">&times;</span>
+        <div class="modal-toolbar">
+            <button id="downloadBtn" class="modal-btn" title="Download">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Download
+            </button>
+        </div>
+        <img class="modal-content" id="modalImage">
+        <div class="modal-caption"></div>
+        <button class="modal-nav modal-prev" id="modalPrev">❮</button>
+        <button class="modal-nav modal-next" id="modalNext">❯</button>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
