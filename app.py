@@ -47,25 +47,42 @@ def index():
 @app.route('/api/photos')
 def get_photos():
     try:
-        result = cloudinary.api.resources(
-            type='upload',
-            prefix=f'{UPLOAD_FOLDER}/',
-            max_results=500
-        )
-
         photos = []
-        for photo in result['resources']:
-            photos.append({
-                'publicId': photo['public_id'],
-                'url': cloudinary.CloudinaryImage(photo['public_id']).build_url(
-                    width=400, height=400, crop='fill', quality='auto', fetch_format='auto'
-                ),
-                'fullUrl': cloudinary.CloudinaryImage(photo['public_id']).build_url(
-                    quality='auto', fetch_format='auto'
+        next_cursor = None
+        
+        # Fetch all photos using pagination (Cloudinary limits to 500 per request)
+        while True:
+            if next_cursor:
+                result = cloudinary.api.resources(
+                    type='upload',
+                    prefix=f'{UPLOAD_FOLDER}/',
+                    max_results=500,
+                    next_cursor=next_cursor
                 )
-            })
+            else:
+                result = cloudinary.api.resources(
+                    type='upload',
+                    prefix=f'{UPLOAD_FOLDER}/',
+                    max_results=500
+                )
 
-        return jsonify({'success': True, 'photos': photos})
+            for photo in result['resources']:
+                photos.append({
+                    'publicId': photo['public_id'],
+                    'url': cloudinary.CloudinaryImage(photo['public_id']).build_url(
+                        width=400, height=400, crop='fill', quality='auto', fetch_format='auto'
+                    ),
+                    'fullUrl': cloudinary.CloudinaryImage(photo['public_id']).build_url(
+                        quality='auto', fetch_format='auto'
+                    )
+                })
+            
+            # Check if there are more results
+            next_cursor = result.get('next_cursor')
+            if not next_cursor:
+                break
+
+        return jsonify({'success': True, 'photos': photos, 'total': len(photos)})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
