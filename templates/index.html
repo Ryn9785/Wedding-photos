@@ -16,44 +16,9 @@
             <p class="subtitle">Beautiful moments captured forever</p>
         </header>
 
-        <!-- Face Match Section -->
-        <section class="face-match-section">
-            <div class="face-match-card">
-                <h2>🎯 Find Your Photos</h2>
-                <p>Upload a selfie to find all photos with you using AI face recognition!</p>
-                
-                <div class="upload-area" id="uploadArea">
-                    <input type="file" id="selfieInput" accept="image/*" capture="user" hidden>
-                    <label for="selfieInput" class="upload-label">
-                        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                            <circle cx="12" cy="13" r="4"/>
-                        </svg>
-                        <span>Click to upload your selfie</span>
-                        <span class="upload-hint">or drag & drop here</span>
-                    </label>
-                </div>
-
-                <div id="previewArea" class="preview-area" style="display: none;">
-                    <img id="previewImage" alt="Preview">
-                    <button id="searchBtn" class="btn btn-primary">Search My Photos</button>
-                    <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
-                </div>
-
-                <div id="loadingIndicator" class="loading" style="display: none;">
-                    <div class="spinner"></div>
-                    <p>Searching for your photos with AI...</p>
-                </div>
-
-                <div id="matchResults" class="match-results" style="display: none;"></div>
-            </div>
-        </section>
-
         <!-- All Photos Section -->
         <section class="gallery-section">
-            <h2>📸 All Wedding Photos</h2>
             <div class="gallery-controls">
-                <button id="showAllBtn" class="btn btn-outline">Show All Photos</button>
                 <span id="photoCount" class="photo-count"></span>
             </div>
             <div id="galleryGrid" class="gallery-grid">
